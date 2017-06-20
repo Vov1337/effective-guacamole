@@ -1,3 +1,7 @@
+%% week 1 - Duke University Image Processing Coursera Class
+% author: Joseph Kaiser
+% date: June 2017
+
 clear; clc; close all
 I = imread('Koala.jpg');
 I = I([200:400],[100:300],[1 2 3]);

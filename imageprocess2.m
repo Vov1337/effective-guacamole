@@ -1,3 +1,7 @@
+%% week 2 - Duke University Image Processing Coursera Class
+% author: Joseph Kaiser
+% date: June 2017
+
 clear;clc
 % basic = 0;
 % %% basic implementation of JPEG - only doing first channel (R)
