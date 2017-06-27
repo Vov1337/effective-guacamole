@@ -78,45 +78,50 @@ hist = imhist(I);
 
 
 %% edge detection using Laplacian
-I = imread('peppers.png');
-newI = zeros((size(I,1)-rad),((size(I,2)-rad)),size(I,3));
-for i = rad+1:(size(I,1)-rad)
-    for j = rad+1:(size(I,2)-rad)
-        for k = 1:size(I,3) % for each color layer
-            window = I([i-1:i+1],[j-1:j+1],k);
-            
-            newI(i,j,k) = median(median((window)));
+I = imread('pears.png');
+I = I(:,:,1);
+newI = zeros((size(I,1)-1),((size(I,2)-1)));
+for i = 2:(size(I,1)-1)
+    for j = 2:(size(I,2)-1)
+            window = I([i-1:i+1],[j-1:j+1]);
+            mask = [0 1 0     
+                    1 -4 1
+                    0 1 0];  %% this is the second derivative in both x and y directions
+                
+            newI(i,j) = sum(sum(double(window).*(mask)))./9;
         end
     
-    end
 end
+figure(2);
+[Gmag, Gdir] = imgradient(I,'sobel');
+
+imshowpair((uint8(newI+25)),Gmag,'montage');
 
 
-
-%% movie
-xyloObj = VideoReader('xylophone.mp4');
-nFrames = xyloObj.NumberOfFrames;
-
-vidHeight = xyloObj.Height;
-vidWidth = xyloObj.Width;
-
-% Preallocate movie structure.
-mov(1:nFrames) = struct('cdata', zeros(vidHeight, vidWidth, 3, 'uint8'), 'colormap', []);
-
-% Read one frame at a time.
-for k = 1 : nFrames
-  im = read(xyloObj, k);
-
-  % here we process the image im
-  mov(k).cdata = im;
-end
-
-% Size a figure based on the video's width and height.
-hf = figure;
-set(hf, 'position', [150 150 vidWidth vidHeight])
-
-% Play back the movie once at the video's frame rate.
-movie(hf, mov, 1, xyloObj.FrameRate);
+% %% movie
+% xyloObj = VideoReader('xylophone.mp4');
+% nFrames = xyloObj.NumberOfFrames;
+% 
+% vidHeight = xyloObj.Height;
+% vidWidth = xyloObj.Width;
+% 
+% % Preallocate movie structure.
+% mov(1:nFrames) = struct('cdata', zeros(vidHeight, vidWidth, 3, 'uint8'), 'colormap', []);
+% 
+% % Read one frame at a time.
+% for k = 1 : nFrames
+%   im = read(xyloObj, k);
+% 
+%   % here we process the image im
+%   mov(k).cdata = im;
+% end
+% 
+% % Size a figure based on the video's width and height.
+% hf = figure;
+% set(hf, 'position', [150 150 vidWidth vidHeight])
+% 
+% % Play back the movie once at the video's frame rate.
+% movie(hf, mov, 1, xyloObj.FrameRate);
 
 
 
