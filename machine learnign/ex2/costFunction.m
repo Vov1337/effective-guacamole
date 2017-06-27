@@ -20,11 +20,13 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+z = X*theta; % gives m by 1 vector of hypotheses for each training example
+h = sigmoid(z); % m by 1
+J = (1./m).*(-y'*log(h)-(1-y)'*log(1-h)); % scalar
 
 
 
-
-
+grad = (1./m).*(X'*(h-y)); % n by 1
 
 
 % =============================================================

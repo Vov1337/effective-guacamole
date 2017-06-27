@@ -13,8 +13,9 @@ J = 0;
 % Instructions: Compute the cost of a particular choice of theta
 %               You should set J to the cost.
 
-
-
+z = X*theta; % gives m by 1 vector of hypotheses for each training example
+h = sigmoid(z); % m by 1
+J = (1./size(X,1)).*(-y'.*log(h)-(1-y)'.*log(1-h));
 
 
 % =========================================================================

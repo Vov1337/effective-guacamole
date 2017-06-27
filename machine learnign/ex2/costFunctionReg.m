@@ -18,8 +18,13 @@ grad = zeros(size(theta));
 %               derivatives of the cost w.r.t. each parameter in theta
 
 
+z = X*theta; % gives m by 1 vector of hypotheses for each training example
+h = sigmoid(z); % m by 1
+J = (1./m).*(-y'*log(h)-(1-y)'*log(1-h)) + lambda./(2.*m).*(theta(2:end)'*theta(2:end)); % scalar
 
 
+grad(1) = (1./m).*(X(:,1)'*(h-y));
+grad(2:end) = (1./m).*(X(:,2:end)'*(h-y)) + (lambda./m).*theta(2:end); % n-1 by 1
 
 
 % =============================================================

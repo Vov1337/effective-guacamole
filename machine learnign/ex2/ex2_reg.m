@@ -80,7 +80,7 @@ pause;
 % Compute and display cost and gradient
 % with all-ones theta and lambda = 10
 test_theta = ones(size(X,2),1);
-[cost, grad] = costFunctionReg(test_theta, X, y, 10);
+[cost, grad] = costFunctionReg(test_theta, X, y, 500);
 
 fprintf('\nCost at test theta (with lambda = 10): %f\n', cost);
 fprintf('Expected cost (approx): 3.16\n');
@@ -107,15 +107,16 @@ pause;
 initial_theta = zeros(size(X, 2), 1);
 
 % Set regularization parameter lambda to 1 (you should vary this)
-lambda = 1;
+lambda = 0;
 
 % Set Options
-options = optimset('GradObj', 'on', 'MaxIter', 400);
+options = optimset('GradObj', 'on', 'MaxIter', 1);
 
 % Optimize
 [theta, J, exit_flag] = ...
 	fminunc(@(t)(costFunctionReg(t, X, y, lambda)), initial_theta, options);
-
+%%
+% $$
 % Plot Boundary
 plotDecisionBoundary(theta, X, y);
 hold on;
